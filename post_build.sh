@@ -21,11 +21,18 @@ if [ $? -eq 0 ]; then
       # cargo flamegraph -o ../../flamegraphs/$file_name.svg --bin $file_name
 
       #windows is not quite finding DTrace " DTrace device not available on system"
-      cargo flamegraph --bin=$file_name -o ../../flamegraphs/$file_name.svg   
+      #cargo flamegraph --bin=$file_name -o ../../flamegraphs/$file_name.svg   
    done
 
    # Change back to the root directory
    cd ../..
+
+   # copy criterion artifacts
+      if [ -d "artifacts" ]; then
+      rm -rf artifacts/*
+   fi
+   mkdir -p artifacts
+   cp -r target/criterion ./artifacts
 
 else
    echo "Build failed, not running post-build commands."
